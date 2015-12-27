@@ -1,23 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<!--ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/fragment_detail"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/fragment_detail"
+    >
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/poster_detail"
-                android:src="@drawable/starwars"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                />
 
             <LinearLayout
                 android:orientation="vertical"
@@ -29,21 +36,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="2015"
-                    android:id="@+id/release_date" />
+                    android:id="@+id/release_date"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="8.11"
-                    android:id="@+id/rating" />
+                    android:id="@+id/rating"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Small Text"
                     android:id="@+id/textView3" />
             </LinearLayout>
         </LinearLayout>
@@ -52,14 +58,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Thirty years after defeating the Galactic Empire, Han Solo and his allies face a new threat from the evil Kylo Ren and his army of Stormtroopers."
             android:id="@+id/plot_synopsis"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:paddingBottom="10dp"
             android:padding="10dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
     </LinearLayout>
-</ScrollView>
+<!--/ScrollView-->
