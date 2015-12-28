@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class NetworkUtil {
     static String LOGTAG = NetworkUtil.class.getSimpleName();
-    static String apiKeyToken = "api_key=64f4f7c32d7ac7854cd3312f0cc16b92";
+    static String apiKeyToken = "api_key=";
     //"http://image.tmdb.org/t/p/w185/weUSwMdQIa3NaXVzwUoIIcAi85d.jpg"+apiKey
 
     static ArrayList<Movie> discover(Context ctxt){
