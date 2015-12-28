@@ -33,10 +33,6 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         poster.setOnClickListener(new View.OnClickListener() { //does it belong here?
             @Override
             public void onClick(View view) {
-                Log.d("Adapter Sumanth clicked", movie.toString());
-                Toast.makeText(getContext(), "Adapter : I clicked " + movie.toString(), Toast.LENGTH_SHORT).show();
-                //Intent movieDetail = new Intent(getContext(), DetailActivity.class).setData(contentUri);
-                //startActivity(movieDetail);
                 Intent detailIntent = new Intent(view.getContext(),DetailActivity.class);
                 detailIntent.putExtra("movieDetail", movie);
                 view.getContext().startActivity(detailIntent);

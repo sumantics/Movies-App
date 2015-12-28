@@ -25,18 +25,18 @@ public class DetailActivityFragment extends Fragment {
         Movie movie = DetailActivity.movie;
         Log.d(LOGTAG, "onCreate " + movie);
 
+        TextView title = (TextView)detail.findViewById(R.id.title);
         ImageView poster = (ImageView) detail.findViewById(R.id.poster_detail);
         TextView releaseDate = (TextView)detail.findViewById(R.id.release_date);
         TextView rating = (TextView)detail.findViewById(R.id.rating);
         TextView plot_synopsis = (TextView)detail.findViewById(R.id.plot_synopsis);
 
         if(movie!=null){
-            //poster.setImageURI(movie.mPosterUri);
             NetworkUtil.getPoster(getContext(), movie.mPoster, poster);
+            title.setText(movie.mTitle);
             releaseDate.setText(movie.mReleaseDate);
             rating.setText(movie.mVoteAvg);
             plot_synopsis.setText(movie.mplotSynopsis);
-            Log.d(LOGTAG, "onCreate " + movie.mplotSynopsis);
         }
         return detail;
     }

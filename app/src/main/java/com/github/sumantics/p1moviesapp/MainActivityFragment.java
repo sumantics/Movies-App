@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class MainActivityFragment extends Fragment {
     static ArrayList<Movie> movieList = new ArrayList<>();
     static String LOGTAG = MainActivityFragment.class.getSimpleName();
+    static String prevChoice = "";
 
     public MainActivityFragment() {
     }
@@ -30,12 +31,17 @@ public class MainActivityFragment extends Fragment {
         if(savedInstanceState!=null && savedInstanceState.containsKey("key")){
             movieList = savedInstanceState.getParcelableArrayList("key");
         }else{
-            //movieList = new ArrayList<>(Arrays.asList(moviesArray));
             movieList = NetworkUtil.discover(getContext());
         }
-        Log.d("onCreate",movieList.toString());
         super.onCreate(savedInstanceState);
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        Log.d("onResume", movieList.toString());
+//        NetworkUtil.discover(getContext(), movieList, prevChoice);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,12 +61,9 @@ public class MainActivityFragment extends Fragment {
                 getActivity().startActivity(detailIntent);
             }
         });
-        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieList);//should use getActivity()??
+        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieList);
         gridView.setAdapter(movieAdapter);
-        Log.d("MAFragment", "gridView:" + gridView.hashCode() + " " + gridView);
-        Log.d("MAFragment", "movieAdapter:" + movieAdapter.hashCode() + " " + movieAdapter);
         return gridView;
-
     }
 
     @Override
