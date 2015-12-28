@@ -25,8 +25,8 @@ public class NetworkUtil {
 
     static ArrayList<Movie> discover(Context ctxt){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctxt);
-        //String choice = prefs.getString(ctxt.getString(R.string.pref_movieSort_key), ctxt.getString(R.string.pref_movieSort_rating));
-        String choice = "popular";
+        String choice = prefs.getString(ctxt.getString(R.string.pref_movieSort_key), ctxt.getString(R.string.pref_movieSort_popularity));
+        //String choice = "popular";
         Log.d("NetworkUtil","selection is "+choice);
         if(choice.equals("rating")){
             return VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&" + apiKeyToken);//need to have vote_count>x

@@ -5,5 +5,5 @@
         android:key="@string/pref_movieSort_key"
         android:entries="@array/pref_movieSort_options"
         android:entryValues="@array/pref_movieSort_values"
-        android:defaultValue="@string/pref_movieSort_popularity"/>
+        android:defaultValue="@string/pref_movieSort_label_popularity"/>
 </PreferenceScreen>

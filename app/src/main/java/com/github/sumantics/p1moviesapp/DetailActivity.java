@@ -15,5 +15,10 @@ public class DetailActivity extends AppCompatActivity {
 
         movie = (Movie)getIntent().getExtras().getParcelable("movieDetail");
         Log.d(LOGTAG,"onCreate "+movie);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.activity_detail, new DetailActivityFragment()).commit();//The child view is already present (via xml), do I remove?
+        }
     }
 }

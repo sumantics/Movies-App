@@ -1,5 +1,6 @@
 package com.github.sumantics.p1moviesapp;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,7 @@ public class DetailActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View detail = inflater.inflate(R.layout.fragment_detail, container, false);
+        //View detail = getActivity().findViewById(R.id.fragment_detail);//trying to read already present child(from xml)
         return populate(detail);
     }
 
@@ -29,10 +31,11 @@ public class DetailActivityFragment extends Fragment {
         TextView plot_synopsis = (TextView)detail.findViewById(R.id.plot_synopsis);
 
         if(movie!=null){
-            poster.setImageResource(new Integer(movie.mPoster));
+            //poster.setImageURI(movie.mPosterUri);
+            NetworkUtil.getPoster(getContext(), movie.mPoster, poster);
             releaseDate.setText(movie.mReleaseDate);
             rating.setText(movie.mVoteAvg);
-            plot_synopsis.setText("Hello !!!!!!!!!!!!! "+movie.mplotSynopsis);
+            plot_synopsis.setText(movie.mplotSynopsis);
             Log.d(LOGTAG, "onCreate " + movie.mplotSynopsis);
         }
         return detail;
