@@ -4,5 +4,5 @@
     android:layout_height="match_parent"
     android:id="@+id/activity_detail"
     >
-    <include layout="@layout/fragment_detail"></include>
+    <!--include layout="@layout/fragment_detail"></include-->
 </LinearLayout>
