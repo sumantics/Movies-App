@@ -17,6 +17,7 @@ import java.util.List;
 public class MovieAdapter extends ArrayAdapter<Movie> {
     public MovieAdapter(Context context, List<Movie> objects) {
         super(context, 0, objects);
+        this.setNotifyOnChange(true);
     }
 
     @Override

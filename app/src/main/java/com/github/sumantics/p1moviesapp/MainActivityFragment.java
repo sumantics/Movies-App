@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class MainActivityFragment extends Fragment {
     static ArrayList<Movie> movieList = new ArrayList<>();
     static String LOGTAG = MainActivityFragment.class.getSimpleName();
-    static String prevChoice = "";
+    static MovieAdapter movieAdapter;
 
     public MainActivityFragment() {
     }
@@ -29,19 +29,23 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) { //called on rotation
         if(savedInstanceState!=null && savedInstanceState.containsKey("key")){
+            movieList.clear();
             movieList = savedInstanceState.getParcelableArrayList("key");
+            Log.d("onCreate",movieList.toString());
         }else{
-            movieList = NetworkUtil.discover(getContext());
+            NetworkUtil.discover(getContext());
         }
         super.onCreate(savedInstanceState);
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        Log.d("onResume", movieList.toString());
-//        NetworkUtil.discover(getContext(), movieList, prevChoice);
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("onResume", movieList.toString());
+        NetworkUtil.discover(getContext());
+        //movieAdapter.clear();
+        Log.d("onResume", movieList.toString());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,13 +65,15 @@ public class MainActivityFragment extends Fragment {
                 getActivity().startActivity(detailIntent);
             }
         });
-        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieList);
+        movieAdapter = new MovieAdapter(getContext(), movieList);
+        //movieAdapter.setNotifyOnChange(true);
         gridView.setAdapter(movieAdapter);
         return gridView;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.d("onSaveInstanceState : ",movieList.toString());
         outState.putParcelableArrayList("key", movieList);
         super.onSaveInstanceState(outState);
     }

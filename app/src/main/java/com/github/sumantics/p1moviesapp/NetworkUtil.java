@@ -16,31 +16,32 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class NetworkUtil {
     static String LOGTAG = NetworkUtil.class.getSimpleName();
-    static String apiKeyToken = "api_key=";
+    static String apiKeyToken = "api_key=" + DoNotCommit.tmdb_movie_key;
     //"http://image.tmdb.org/t/p/w185/weUSwMdQIa3NaXVzwUoIIcAi85d.jpg"+apiKey
 
-    static ArrayList<Movie> discover(Context ctxt){
+    static void discover(Context ctxt){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctxt);
         String choice = prefs.getString(ctxt.getString(R.string.pref_movieSort_key), ctxt.getString(R.string.pref_movieSort_popularity));
         //String choice = "popular";
         Log.d("NetworkUtil","selection is "+choice);
         if(choice.equals("rating")){
-            return VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&" + apiKeyToken);//need to have vote_count>x
+            VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&" + apiKeyToken);//need to have vote_count>x
         }
-        return VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&" + apiKeyToken);
+        VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&" + apiKeyToken);
     }
-    private static ArrayList<Movie> VolleyGet(final Context ctxt, String url){
-        final ArrayList<Movie> movies = new ArrayList<>();
+    private static void VolleyGet(final Context ctxt, String url){
         RequestQueue queue = Volley.newRequestQueue(ctxt);
         JsonObjectRequest request = new JsonObjectRequest(url,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObj) {
-                        movies.addAll(Movie.parse(ctxt, jsonObj));
+                        Movie.parse(ctxt, jsonObj);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -50,7 +51,6 @@ public class NetworkUtil {
             }
         });
         queue.add(request);
-        return movies;
     }
     static void getPoster(Context context, String fileId, ImageView view){
         //reco size=w185
