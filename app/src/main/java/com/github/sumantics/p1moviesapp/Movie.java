@@ -37,7 +37,7 @@ public class Movie implements Parcelable{
 
     @Override
     public String toString() {
-        return mTitle +":"+mChecked + ":" + mPoster;
+        return mTitle +":"+mChecked;
     }
 
     @Override
@@ -70,22 +70,24 @@ public class Movie implements Parcelable{
         }
     };
 
-    static List<Movie> parse(Context ctxt, JSONObject moviesJson){
-        List<Movie> movies = new ArrayList<>();
+    static void parse(Context ctxt, JSONObject moviesJson){
         if(moviesJson.has("results")){
+            MainActivityFragment.movieList.clear();
             try {
                 JSONArray results = moviesJson.getJSONArray("results");
                 for(int i=0; i<results.length(); i++){
                     JSONObject result = results.getJSONObject(i);
                     result.getString("poster_path");
                     Movie movie = new Movie(result.getString("title"),result.getString("id"),result.getString("poster_path"),result.getString("release_date"),result.getString("vote_average"),result.getString("overview"));
-                    movies.add(movie);
+                    MainActivityFragment.movieList.add(movie);
                 }
             }catch(JSONException jsonE){
                 Log.e("Movie::parse","Error during parsing", jsonE);
                 Toast.makeText(ctxt,"",Toast.LENGTH_SHORT).show();
             }
+            MainActivityFragment.movieAdapter.notifyDataSetInvalidated();
+            Log.d("parse", MainActivityFragment.movieList.toString());
+            Log.d("parse",MainActivityFragment.movieAdapter.getItem(1).toString());
         }
-        return movies;
     }
 }
