@@ -22,6 +22,7 @@ public class Movie implements Parcelable{
     String mplotSynopsis;
     boolean mChecked;
     List<Trailer> trailers = new ArrayList<>();
+    List<Review> reviews = new ArrayList<>();
 
     public Movie(String name, String id, String poster, String releaseDate, String voteAvg, String overview){
         this(name, id, poster, releaseDate, voteAvg, overview, false);
@@ -91,6 +92,23 @@ public class Movie implements Parcelable{
         }
     }
 
+    public void updateReviews(Context ctxt, JSONObject reviewsJson) {
+        if (reviewsJson.has("results")) {
+            DetailActivityFragment.mReviewAdapter.clear();
+            try {
+                JSONArray results = reviewsJson.getJSONArray("results");
+                for(int i=0; i<results.length(); i++) {
+                    JSONObject result = results.getJSONObject(i);
+                    DetailActivityFragment.mReviewAdapter.add(new Review(result.getString("author"),result.getString("content"),result.getString("url")));
+                }
+            } catch (JSONException jsonE) {
+                Log.e("Movie::updateReviews", "Error during parsing", jsonE);
+            }
+        }
+        Log.d("reviewsJSON:", reviewsJson.toString());
+        Log.d("reviews:", this.reviews.toString());
+    }
+
     public void updateTrailers(Context ctxt, JSONObject trailerJson) {
         if (trailerJson.has("results")) {
             DetailActivityFragment.mTrailerAdapter.clear();
@@ -115,5 +133,6 @@ public class Movie implements Parcelable{
 
     public void backgroundGet(Context ctx) {
         NetworkUtil.getTrailer(ctx, this);
+        NetworkUtil.getReviews(ctx, this);
     }
 }

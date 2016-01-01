@@ -6,18 +6,21 @@
     android:id="@+id/review_item"
     ><!--no wrap?? -->
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/review_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="author"
-        />
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/review_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         tools:text="review content
 
 
         end"
-        />
+        android:paddingLeft="10dp" /><!-- layout_height : the height of first cooment is set-->
+        <!-- scrolling is an issue on Landscape : vertical scroll is seen, but the page scroll takes over
+         ditto for 3+ trailers
+        -->
 </LinearLayout>

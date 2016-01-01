@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class DetailActivityFragment extends Fragment {
     static String LOGTAG = DetailActivityFragment.class.getSimpleName();
     static TrailerAdapter mTrailerAdapter;
+    static ReviewAdapter mReviewAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class DetailActivityFragment extends Fragment {
         TextView rating = (TextView)detail.findViewById(R.id.rating);
         TextView plot_synopsis = (TextView)detail.findViewById(R.id.plot_synopsis);
         ListView trailerHolder = (ListView)detail.findViewById(R.id.trailers_holder);
+        ListView reviewsHolder = (ListView)detail.findViewById(R.id.reviews_holder);
 
         if(movie!=null){
             NetworkUtil.getPoster(getContext(), movie.mPoster, poster);
@@ -43,6 +45,9 @@ public class DetailActivityFragment extends Fragment {
 
             mTrailerAdapter = new TrailerAdapter(getContext(), movie.trailers);
             trailerHolder.setAdapter(mTrailerAdapter);
+
+            mReviewAdapter = new ReviewAdapter(getContext(), movie.reviews);
+            reviewsHolder.setAdapter(mReviewAdapter);
         }
 
         movie.backgroundGet(getContext());
