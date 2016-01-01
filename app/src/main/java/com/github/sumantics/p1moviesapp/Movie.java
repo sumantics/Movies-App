@@ -21,6 +21,7 @@ public class Movie implements Parcelable{
     String mVoteAvg;
     String mplotSynopsis;
     boolean mChecked;
+    List<Trailer> trailers = new ArrayList<>();
 
     public Movie(String name, String id, String poster, String releaseDate, String voteAvg, String overview){
         this(name, id, poster, releaseDate, voteAvg, overview, false);
@@ -82,12 +83,37 @@ public class Movie implements Parcelable{
                     MainActivityFragment.movieList.add(movie);
                 }
             }catch(JSONException jsonE){
-                Log.e("Movie::parse","Error during parsing", jsonE);
-                Toast.makeText(ctxt,"",Toast.LENGTH_SHORT).show();
+                Log.e("Movie::parse", "Error during parsing", jsonE);
             }
-            MainActivityFragment.movieAdapter.notifyDataSetInvalidated();
+            MainActivityFragment.moviePosterAdapter.notifyDataSetInvalidated();
             Log.d("parse", MainActivityFragment.movieList.toString());
-            Log.d("parse",MainActivityFragment.movieAdapter.getItem(1).toString());
+            Log.d("parse",MainActivityFragment.moviePosterAdapter.getItem(1).toString());
         }
+    }
+
+    public void updateTrailers(Context ctxt, JSONObject trailerJson) {
+        if (trailerJson.has("results")) {
+            DetailActivityFragment.mTrailerAdapter.clear();
+            try {
+                JSONArray results = trailerJson.getJSONArray("results");
+                for(int i=0; i<results.length(); i++) {
+                    JSONObject result = results.getJSONObject(i);
+                    if(result.getString("type").equals("Trailer")) {
+                        if(result.getString("site").equalsIgnoreCase("youtube")) {
+                            String url = "https://www.youtube.com/watch?v="+result.getString("key");
+                            DetailActivityFragment.mTrailerAdapter.add(new Trailer(url, result.getString("name")));
+                        }
+                    }
+                }
+                } catch (JSONException jsonE) {
+                Log.e("Movie::updateTrailers", "Error during parsing", jsonE);
+            }
+        }
+        Log.d("trailersJSON:", trailerJson.toString());
+        Log.d("trailers:", this.trailers.toString());
+    }
+
+    public void backgroundGet(Context ctx) {
+        NetworkUtil.getTrailer(ctx, this);
     }
 }

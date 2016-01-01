@@ -57,4 +57,28 @@ public class NetworkUtil {
         String url = "http://image.tmdb.org/t/p/w185/"+fileId+"?"+apiKeyToken;
         Picasso.with(context).load(url).placeholder(R.drawable.starwars).error(R.drawable.starwars).into(view);
     }
+    static void getReviews(Context context, String movieID){
+        String url = "http://api.themoviedb.org/3/movie/"+movieID+"/reviews?"+apiKeyToken;
+    }
+    void updateTrailers(){
+
+    }
+
+    static void getTrailer(final Context ctxt, final Movie movie){
+        String url = "http://api.themoviedb.org/3/movie/"+movie.mMovieId+"/videos?"+apiKeyToken;
+        RequestQueue queue = Volley.newRequestQueue(ctxt);
+        JsonObjectRequest request = new JsonObjectRequest(url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObj) {
+                        movie.updateTrailers(ctxt, jsonObj);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(LOGTAG+"getTrailer", "Volley onErrorResponse:", error);
+            }
+        });
+        queue.add(request);
+    }
 }

@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MovieAdapter extends ArrayAdapter<Movie> {
-    public MovieAdapter(Context context, List<Movie> objects) {
+public class MoviePosterAdapter extends ArrayAdapter<Movie> {
+    public MoviePosterAdapter(Context context, List<Movie> objects) {
         super(context, 0, objects);
         this.setNotifyOnChange(true);
     }
@@ -57,7 +57,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 movie.mChecked = b;
-                Log.d("Sumanth checking", movie.mTitle + " : " + b+ " "+ movie.hashCode());
+                Log.d("checking", movie.mTitle + " : " + b+ " "+ movie.hashCode());
                 somethingChanged();
             }
         });

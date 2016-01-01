@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class DetailActivityFragment extends Fragment {
     static String LOGTAG = DetailActivityFragment.class.getSimpleName();
+    static TrailerAdapter mTrailerAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class DetailActivityFragment extends Fragment {
         TextView releaseDate = (TextView)detail.findViewById(R.id.release_date);
         TextView rating = (TextView)detail.findViewById(R.id.rating);
         TextView plot_synopsis = (TextView)detail.findViewById(R.id.plot_synopsis);
+        ListView trailerHolder = (ListView)detail.findViewById(R.id.trailers_holder);
 
         if(movie!=null){
             NetworkUtil.getPoster(getContext(), movie.mPoster, poster);
@@ -37,7 +40,13 @@ public class DetailActivityFragment extends Fragment {
             releaseDate.setText(movie.mReleaseDate);
             rating.setText(movie.mVoteAvg);
             plot_synopsis.setText(movie.mplotSynopsis);
+
+            mTrailerAdapter = new TrailerAdapter(getContext(), movie.trailers);
+            trailerHolder.setAdapter(mTrailerAdapter);
         }
+
+        movie.backgroundGet(getContext());
+
         return detail;
     }
 

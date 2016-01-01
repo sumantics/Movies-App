@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivityFragment extends Fragment {
     static ArrayList<Movie> movieList = new ArrayList<>();
     static String LOGTAG = MainActivityFragment.class.getSimpleName();
-    static MovieAdapter movieAdapter;
+    static MoviePosterAdapter moviePosterAdapter;
 
     public MainActivityFragment() {
     }
@@ -43,7 +42,7 @@ public class MainActivityFragment extends Fragment {
         super.onResume();
         Log.d("onResume", movieList.toString());
         NetworkUtil.discover(getContext());
-        //movieAdapter.clear();
+        //moviePosterAdapter.clear();
         Log.d("onResume", movieList.toString());
     }
 
@@ -65,9 +64,9 @@ public class MainActivityFragment extends Fragment {
                 getActivity().startActivity(detailIntent);
             }
         });
-        movieAdapter = new MovieAdapter(getContext(), movieList);
-        //movieAdapter.setNotifyOnChange(true);
-        gridView.setAdapter(movieAdapter);
+        moviePosterAdapter = new MoviePosterAdapter(getContext(), movieList);
+        //moviePosterAdapter.setNotifyOnChange(true);
+        gridView.setAdapter(moviePosterAdapter);
         return gridView;
     }
 
