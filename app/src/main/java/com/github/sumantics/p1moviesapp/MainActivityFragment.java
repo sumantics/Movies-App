@@ -1,6 +1,7 @@
 package com.github.sumantics.p1moviesapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class MainActivityFragment extends Fragment {
         if(savedInstanceState!=null && savedInstanceState.containsKey("key")){
             movieList.clear();
             movieList = savedInstanceState.getParcelableArrayList("key");
-            Log.d("onCreate",movieList.toString());
+            Log.d("onCreate:",movieList.toString());
         }else{
             NetworkUtil.discover(getContext());
         }
@@ -54,16 +55,15 @@ public class MainActivityFragment extends Fragment {
         GridView gridView = (GridView)inflater.inflate(R.layout.fragment_main, container, false);
         //View relativeView = inflater.inflate(R.layout.fragment_main, container, false);
         //GridView gridView = (GridView)relativeView.findViewById(R.id.gridview_movies);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {//does not come here
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {//does not come here if any of the children can be clicked
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Object movie = adapterView.getItemAtPosition(position);//Poster I clicked??
-                Toast.makeText(getActivity(), "clicked " + movie.toString(), Toast.LENGTH_SHORT).show();
+                Movie movie = (Movie)adapterView.getItemAtPosition(position);//Poster I clicked??
                 Log.d(LOGTAG, "clicked on " + movie.toString());
-                Intent detailIntent = new Intent(getActivity(),DetailActivityFragment.class);
-                getActivity().startActivity(detailIntent);
+                ((Callback)getActivity()).onItemSelected(movie);//populate it later
             }
         });
+
         moviePosterAdapter = new MoviePosterAdapter(getContext(), movieList);
         //moviePosterAdapter.setNotifyOnChange(true);
         gridView.setAdapter(moviePosterAdapter);
@@ -75,6 +75,10 @@ public class MainActivityFragment extends Fragment {
         Log.d("onSaveInstanceState : ",movieList.toString());
         outState.putParcelableArrayList("key", movieList);
         super.onSaveInstanceState(outState);
+    }
+
+    public interface Callback {
+        public void onItemSelected(Movie movie);
     }
 
     /*

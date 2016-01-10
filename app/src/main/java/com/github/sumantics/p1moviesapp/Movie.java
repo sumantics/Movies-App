@@ -87,8 +87,8 @@ public class Movie implements Parcelable{
                 Log.e("Movie::parse", "Error during parsing", jsonE);
             }
             MainActivityFragment.moviePosterAdapter.notifyDataSetInvalidated();
-            Log.d("parse", MainActivityFragment.movieList.toString());
-            Log.d("parse",MainActivityFragment.moviePosterAdapter.getItem(1).toString());
+            //Log.d("parse", MainActivityFragment.movieList.toString());
+            //Log.d("parse",MainActivityFragment.moviePosterAdapter.getItem(1).toString());
         }
     }
 
@@ -105,8 +105,8 @@ public class Movie implements Parcelable{
                 Log.e("Movie::updateReviews", "Error during parsing", jsonE);
             }
         }
-        Log.d("reviewsJSON:", reviewsJson.toString());
-        Log.d("reviews:", this.reviews.toString());
+        //Log.d("reviewsJSON:", reviewsJson.toString());
+        //Log.d("reviews:", this.reviews.toString());
     }
 
     public void updateTrailers(Context ctxt, JSONObject trailerJson) {
@@ -127,8 +127,8 @@ public class Movie implements Parcelable{
                 Log.e("Movie::updateTrailers", "Error during parsing", jsonE);
             }
         }
-        Log.d("trailersJSON:", trailerJson.toString());
-        Log.d("trailers:", this.trailers.toString());
+        //Log.d("trailersJSON:", trailerJson.toString());
+        //Log.d("trailers:", this.trailers.toString());
     }
 
     public void backgroundGet(Context ctx) {

@@ -12,13 +12,12 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
         movie = (Movie)getIntent().getExtras().getParcelable("movieDetail");
-        Log.d(LOGTAG,"onCreate "+movie);
+        Log.d(LOGTAG, "onCreate::" + movie);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_detail, new DetailActivityFragment()).commit();//The child view is already present (via xml), do I remove?
+                    .add(R.id.detail_container, new DetailActivityFragment()).commit();
         }
     }
 }

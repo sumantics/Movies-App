@@ -1,8 +1,10 @@
 package com.github.sumantics.p1moviesapp;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +28,7 @@ public class DetailActivityFragment extends Fragment {
 
     private View populate(View detail) {
         Movie movie = DetailActivity.movie;
-        Log.d(LOGTAG, "onCreate " + movie);
+        Log.d(LOGTAG, "onCreate:" + movie);
 
         TextView title = (TextView)detail.findViewById(R.id.title);
         ImageView poster = (ImageView) detail.findViewById(R.id.poster_detail);
@@ -51,15 +53,25 @@ public class DetailActivityFragment extends Fragment {
         }
 
         movie.backgroundGet(getContext());
-
         return detail;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         populate(view);
+    }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if(savedInstanceState!=null)
+        Log.d("Sumanth",savedInstanceState.getString("movieDetail"));
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        Log.d("Sumanth::",context.toString()+" :: "+DetailActivity.movie);
+        super.onAttach(context);
     }
 }

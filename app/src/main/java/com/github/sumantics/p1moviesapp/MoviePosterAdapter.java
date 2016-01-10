@@ -21,7 +21,7 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(int position, View view, final ViewGroup parent) {
         if(view==null){
             view = LayoutInflater.from(getContext()).inflate(R.layout.grid_item_movie, parent, false);
         }
@@ -30,16 +30,18 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
 
         final ImageView poster = (ImageView) view.findViewById(R.id.grid_item_poster);  //use viewHolder, but since 1 item
         NetworkUtil.getPoster(getContext(), movie.mPoster, poster);
-
+/*      working, but wanted to move this code to Fragment
         poster.setOnClickListener(new View.OnClickListener() { //does it belong here?
             @Override
             public void onClick(View view) {
+                Log.d("Adapter onClick","parent"+parent.toString());
                 Intent detailIntent = new Intent(view.getContext(),DetailActivity.class);
                 detailIntent.putExtra("movieDetail", movie);
                 view.getContext().startActivity(detailIntent);
             }
         });
 
+*/
         //added checkbox for testing state-retention during rotation
         final CheckBox checkBox = (CheckBox) view.findViewById(R.id.grid_item_check);
         checkBox.setChecked(movie.mChecked);
