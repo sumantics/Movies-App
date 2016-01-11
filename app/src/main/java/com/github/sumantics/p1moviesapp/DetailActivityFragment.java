@@ -63,15 +63,17 @@ public class DetailActivityFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        if(savedInstanceState!=null)
-        Log.d("Sumanth",savedInstanceState.getString("movieDetail"));
+    public void onActivityCreated(Bundle savedInstanceState) {//When detail activity is created(click on poster in potrait/land->potrait)
+        if(savedInstanceState!=null && savedInstanceState.get("movieDetail")!=null) {
+            DetailActivity.movie = (Movie)savedInstanceState.get("movieDetail");
+        }
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onAttach(Context context) {
-        Log.d("Sumanth::",context.toString()+" :: "+DetailActivity.movie);
+        if(this.getArguments()!=null && this.getArguments().getParcelable("movieDetail")!=null)
+            DetailActivity.movie = this.getArguments().getParcelable("movieDetail");
         super.onAttach(context);
     }
 }

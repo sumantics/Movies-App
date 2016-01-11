@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); //commented after dual pane
         //setSupportActionBar(toolbar);
-
+        setContentView(R.layout.activity_main);
         //new code after dual-pane
         if(findViewById(R.id.detail_container)!=null){
             mTwoPane = true;
             if (savedInstanceState == null) {
+                Log.d("MainActivity", " : " + findViewById(R.id.fragment_detail)+" : "+ findViewById(R.id.detail_container)+ ":" + savedInstanceState);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.detail_container, new DetailActivityFragment()).commit();
             }
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
 
             DetailActivityFragment fragment = new DetailActivityFragment();
             fragment.setArguments(args);
+            Log.d("onItemSelected", "args:" + args);
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_container, fragment).commit();
