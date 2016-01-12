@@ -30,8 +30,21 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" /><!-- not working -->
+                android:value=".MainActivity" />
         </activity>
+        <provider
+            android:name=".data.MovieContentProvider"
+            android:authorities="com.github.sumantics.p1moviesapp"
+            android:enabled="true"
+            android:exported="false"
+            />
+        <!--  exported : if other Apps can use this content provider-->
+        <!--permission
+            android:name=".MovieAppPermission"
+            android:protectionLevel=""
+            android:label="Movie App Permission"
+            >
+        </permission-->
     </application>
 
 </manifest>

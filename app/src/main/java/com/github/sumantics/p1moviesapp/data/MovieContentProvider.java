@@ -34,7 +34,7 @@ public class MovieContentProvider extends ContentProvider{
         if ( _id > 0 )
             returnUri = MovieContract.MovieEntry.buildMovieUri(_id);
         else
-            throw new android.database.SQLException("Failed to insert row into " + uri);
+            throw new android.database.SQLException("Failed to insert row into " + uri);//we can only add MOVIE_ITEM
         getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
     }
@@ -90,7 +90,8 @@ public class MovieContentProvider extends ContentProvider{
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(MovieContract.CONTENT_AUTHORITY, MovieContract.PATH_FAVMOVIE, MOVIE);
-        matcher.addURI(MovieContract.CONTENT_AUTHORITY, MovieContract.PATH_FAVMOVIE + "/#", MOVIE_WITH_ID);
+        matcher.addURI(MovieContract.CONTENT_AUTHORITY, MovieContract.PATH_FAVMOVIE + "/*", MOVIE_WITH_ID); //# for numbers
         return matcher;
     }
+    //add entries in manifest.xml
 }
