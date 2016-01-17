@@ -1,8 +1,8 @@
 package com.github.sumantics.p1moviesapp;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Parcel;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.github.sumantics.p1moviesapp.data.MovieContract;
 
 import java.util.List;
 
@@ -49,6 +51,32 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
             @Override
             public void onClick(View view) {
                 movie.mChecked = !movie.mChecked;
+                ContentValues values = new ContentValues();
+                values.put(MovieContract.MovieEntry.COLUMN_MOVIE_ID,movie.mMovieId);
+                values.put(MovieContract.MovieEntry.COLUMN_MOVIE_POSTER_ID,movie.mPoster);
+                values.put(MovieContract.MovieEntry.COLUMN_RATING,movie.mVoteAvg);
+                values.put(MovieContract.MovieEntry.COLUMN_TITLE,movie.mTitle);
+                values.put(MovieContract.MovieEntry.COLUMN_REL_DATE,movie.mReleaseDate);
+                values.put(MovieContract.MovieEntry.COLUMN_OVIEW,movie.mplotSynopsis);
+                if(movie.mChecked){
+                    try {
+                        Uri insertedUri = getContext().getContentResolver().insert(
+                                MovieContract.MovieEntry.buildMovieUri(Long.parseLong(movie.mMovieId)),
+                                values
+                        );
+                        Toast.makeText(getContext().getApplicationContext(),"Fave'd movie "+movie.mTitle, Toast.LENGTH_SHORT);
+                    }catch (android.database.SQLException ex){
+                        Log.e("MoviePosterAdapter","Should be ok, if already inserted",ex);
+                    }
+                }else{
+                    int numRowsDeleted = getContext().getContentResolver().delete(
+                            MovieContract.MovieEntry.CONTENT_URI,
+                            MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = "+movie.mMovieId,
+                            new String[]{}
+                    );
+                    Toast.makeText(getContext().getApplicationContext(),"De-fave'd movie "+movie.mTitle, Toast.LENGTH_SHORT);
+                    //Log.d("MoviePosterAdapter","numRowsDeleted:"+numRowsDeleted); //deleting fine, inserting fine : check why get is not returning anything
+                }
             }
         });
 

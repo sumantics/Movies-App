@@ -1,4 +1,4 @@
-<!--?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,7 +21,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main_land" />
-</android.support.design.widget.CoordinatorLayout-->
     <!--android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -29,34 +28,4 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_dialog_email" /-->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:baselineAligned="false"
-    android:orientation="horizontal"
-    android:divider="?android:attr/dividerHorizontal"
-    tools:context="com.github.sumantics.p1moviesapp.MainActivity">
-    <fragment
-        android:id="@+id/fragment_main"
-        android:name="com.github.sumantics.p1moviesapp.MainActivityFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        tools:layout="@layout/fragment_main"></fragment>
-    <!--fragment
-        android:id="@id/fragment_detail"
-        android:name="com.github.sumantics.p1moviesapp.MainActivityFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        tools:layout="@layout/fragment_detail"></fragment--><!-- This should be a FrameLyt container (else grey bkgrnd)-->
-    <FrameLayout
-        android:id="@+id/detail_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"/>
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

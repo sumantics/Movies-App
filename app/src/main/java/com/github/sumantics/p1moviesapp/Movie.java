@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -79,14 +80,15 @@ public class Movie implements Parcelable{
                 JSONArray results = moviesJson.getJSONArray("results");
                 for(int i=0; i<results.length(); i++){
                     JSONObject result = results.getJSONObject(i);
-                    result.getString("poster_path");
                     Movie movie = new Movie(result.getString("title"),result.getString("id"),result.getString("poster_path"),result.getString("release_date"),result.getString("vote_average"),result.getString("overview"));
                     MainActivityFragment.movieList.add(movie);
                 }
             }catch(JSONException jsonE){
                 Log.e("Movie::parse", "Error during parsing", jsonE);
             }
-            MainActivityFragment.moviePosterAdapter.notifyDataSetInvalidated();
+
+            ((ArrayAdapter)MainActivityFragment.moviePosterAdapter).notifyDataSetInvalidated();//commented after adding code for CursorAdapter
+
             //Log.d("parse", MainActivityFragment.movieList.toString());
             //Log.d("parse",MainActivityFragment.moviePosterAdapter.getItem(1).toString());
         }

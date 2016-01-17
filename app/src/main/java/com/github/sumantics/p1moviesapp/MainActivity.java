@@ -19,9 +19,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); //commented after dual pane
-        //setSupportActionBar(toolbar);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); //commented after dual pane
+        setSupportActionBar(toolbar);
         //new code after dual-pane
         if(findViewById(R.id.detail_container)!=null){
             mTwoPane = true;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
         }else{
             mTwoPane = false;
         }
+        //see if mainFragment can be inflated here, instead of in the xml
 /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -87,4 +88,24 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
                     .replace(R.id.detail_container, fragment).commit();
         }
     }
+/* was in sunshine
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String location = Utility.getPreferredLocation( this );
+        // update the location in our second pane using the fragment manager
+        if (location != null && !location.equals(mLocation)) {
+            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_forecast);
+            if ( null != ff ) {
+                ff.onLocationChanged();
+            }
+            DetailFragment df = (DetailFragment)getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG);
+            if ( null != df ) {
+                df.onLocationChanged(location);
+            }
+            mLocation = location;
+        }
+    }
+  */
+
 }

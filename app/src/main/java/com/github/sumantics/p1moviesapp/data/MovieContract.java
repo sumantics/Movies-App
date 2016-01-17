@@ -15,12 +15,19 @@ public class MovieContract {
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVMOVIE;
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVMOVIE;
 
+        public static final String _ID = "_id";
         public static final String TABLE_NAME = "movie";
         public static final String COLUMN_MOVIE_ID = "movie_id";
+        public static final String COLUMN_MOVIE_POSTER_ID = "poster_id";
         //other cols here
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_RATING = "rating";
+        public static final String COLUMN_REL_DATE = "releaseDate";
+        public static final String COLUMN_OVIEW = "overview";
 
+        public static Uri favMoviesUri(){
+            return CONTENT_URI;
+        }
         public static Uri buildMovieUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

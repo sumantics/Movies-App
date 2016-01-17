@@ -42,14 +42,34 @@ public class MovieContentProvider extends ContentProvider{
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        /*
+        use this code, raw query is ok for now
+                    String sort = MovieContract.MovieEntry.COLUMN_TITLE + " ASC";
+                    Cursor c = getContext().getContentResolver().query(MovieContract.MovieEntry.favMoviesUri(), new String[]{MovieContract.MovieEntry.COLUMN_TITLE},"allMovies",new String[]{"0"},sort);
+                    Log.d("cursor:", c.toString() + " count:" + c.getCount());
+                    while(c.moveToNext()){
+                            Log.d("cursor:", c.toString() + " title:" + c.getString(0));
+                    }
+
+         */
         Cursor retCursor = null;
         String groupBy=null, having = null;
+        /*
+        if(selection!=null && selection.startsWith("SELECT ")){
+            retCursor = movieDbHelper.getReadableDatabase().rawQuery("SELECT title, poster_id FROM movie", new String[]{});
+            return retCursor;
+        }
+        */
         switch (sUriMatcher.match(uri)){
-            case MOVIE:
+            case MOVIE:{
+                sQueryBuilder.setTables(MovieContract.MovieEntry.TABLE_NAME);
                 retCursor = sQueryBuilder.query(movieDbHelper.getReadableDatabase(), projection, selection, selectionArgs, groupBy, having, sortOrder);
+                break;
+            }
             case MOVIE_WITH_ID: {
                 String custSelection = MovieContract.MovieEntry.TABLE_NAME + "." + MovieContract.MovieEntry.COLUMN_MOVIE_ID + " = ?";
                 retCursor = sQueryBuilder.query(movieDbHelper.getReadableDatabase(), projection, custSelection, selectionArgs, groupBy, having, sortOrder);
+                break;
             }
         }
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
