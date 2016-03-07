@@ -28,8 +28,8 @@
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:id="@+id/poster_detail"
                 android:padding="10dp"
                 android:scaleType="fitXY"
@@ -60,12 +60,24 @@
                     tools:text="8.5"
                     />
 
-                <TextView
+                <!--TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView3"
+                    /-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Trailers : "
                     />
+                <!--include layout="@layout/grid_item_trailer"></include-->
+                <ListView
+                    android:id="@+id/trailers_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
             </LinearLayout>
         </LinearLayout>
 
@@ -82,6 +94,16 @@
             android:layout_weight="1"
             tools:text="plotSynopsis"
             />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reviews : "
+            />
+        <!--include layout="@layout/list_item_review"></include-->
+        <ListView
+            android:id="@+id/reviews_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
     </LinearLayout>
 </ScrollView>

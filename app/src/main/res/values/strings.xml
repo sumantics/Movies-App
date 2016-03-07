@@ -6,7 +6,9 @@
     <string name="pref_movieSort_label">Sort Order</string>
     <string name="pref_movieSort_label_popularity">Popularity</string>
     <string name="pref_movieSort_label_rating">Rating</string>
+    <string name="pref_movieSort_label_favourite">Favourite</string>
     <string name="pref_movieSort_key" translatable="false">movieSort</string>           <!-- no lang translation, "key" we need it -->
     <string name="pref_movieSort_popularity" translatable="false">popularity</string>
     <string name="pref_movieSort_rating" translatable="false">rating</string>
+    <string name="pref_movieSort_favourite" translatable="false">favourite</string>
 </resources>

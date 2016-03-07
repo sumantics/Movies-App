@@ -2,6 +2,7 @@ package com.github.sumantics.p1moviesapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
@@ -12,8 +13,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.sumantics.p1moviesapp.data.MovieContract;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -28,12 +31,29 @@ public class NetworkUtil {
     static void discover(Context ctxt){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctxt);
         String choice = prefs.getString(ctxt.getString(R.string.pref_movieSort_key), ctxt.getString(R.string.pref_movieSort_popularity));
-        //String choice = "popular";
-        Log.d("NetworkUtil","selection is "+choice);
+        //choice = "favourite";
+        Log.d("NetworkUtil", "selection is " + choice);
         if(choice.equals("rating")){
             VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&" + apiKeyToken);//need to have vote_count>x
+        }else if(choice.equals("popularity")) {
+            VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&" + apiKeyToken);
+        }else {
+            Log.d("NetworkUtil"," choice:"+choice);
+            /*
+            JSONObject jMovie = new JSONObject();
+            try {
+                jMovie.put("title", "ABC");
+                jMovie.put("id", "140607");
+                jMovie.put("poster_path", "/fYzpM9GmpBlIC893fNjoWCwE24H.jpg");
+                jMovie.put("release_date", "2016");
+                jMovie.put("vote_average", "10");
+                jMovie.put("overview", "overview");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Movie.parse(ctxt,jMovie);
+            */
         }
-        VolleyGet(ctxt, "http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&" + apiKeyToken);
     }
     private static void VolleyGet(final Context ctxt, String url){
         RequestQueue queue = Volley.newRequestQueue(ctxt);
@@ -56,5 +76,40 @@ public class NetworkUtil {
         //reco size=w185
         String url = "http://image.tmdb.org/t/p/w185/"+fileId+"?"+apiKeyToken;
         Picasso.with(context).load(url).placeholder(R.drawable.starwars).error(R.drawable.starwars).into(view);
+    }
+    static void getReviews(final Context ctxt, final Movie movie){
+        String url = "http://api.themoviedb.org/3/movie/"+movie.mMovieId+"/reviews?"+apiKeyToken;
+        RequestQueue queue = Volley.newRequestQueue(ctxt);
+        JsonObjectRequest request = new JsonObjectRequest(url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObj) {
+                        movie.updateReviews(ctxt, jsonObj);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(LOGTAG+"getTrailer", "Volley onErrorResponse:", error);
+            }
+        });
+        queue.add(request);
+    }
+
+    static void getTrailer(final Context ctxt, final Movie movie){
+        String url = "http://api.themoviedb.org/3/movie/"+movie.mMovieId+"/videos?"+apiKeyToken;
+        RequestQueue queue = Volley.newRequestQueue(ctxt);
+        JsonObjectRequest request = new JsonObjectRequest(url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObj) {
+                        movie.updateTrailers(ctxt, jsonObj);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(LOGTAG+"getTrailer", "Volley onErrorResponse:", error);
+            }
+        });
+        queue.add(request);
     }
 }
